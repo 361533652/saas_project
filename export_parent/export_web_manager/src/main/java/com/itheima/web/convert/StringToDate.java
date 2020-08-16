@@ -23,6 +23,7 @@ public class StringToDate implements Converter<String, Date> {
             "yyyy MM dd",
             "yyyyMMdd"
     };
+    private Exception e = new Exception();
 
     @Override
     public Date convert(String s) {
@@ -32,13 +33,15 @@ public class StringToDate implements Converter<String, Date> {
                     //模拟其他代码块
                     //int a = 5 / 0;
                     return new SimpleDateFormat(dateFormat).parse(s);
-                } catch (ParseException ignored) {
-                    //忽略解析错误异常
-                } catch (Exception e) {
+                } catch (ParseException e0) {
+                    //此处异常可忽略
+                    e = e0;
+                } catch (Exception tempE) {
                     //抓其他异常
-                    e.printStackTrace();
+                    tempE.printStackTrace();
                 }
             }
+            e.printStackTrace();
         }
         return null;
     }

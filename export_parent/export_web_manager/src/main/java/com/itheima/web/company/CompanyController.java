@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -39,10 +40,14 @@ public class CompanyController {
      *   测试异常
      */
     @RequestMapping("/testDate")
-    public String testDate(Date date){
-        System.out.println(date);
+    public String testDate(Date date, HttpServletRequest request){
         //模拟异常
         //int a = 5/0;
+        if (date==null){
+            request.setAttribute("errorMsg","格式错误！请重试！");
+            return "forward:/WEB-INF/pages/error.jsp";
+        }
+        System.out.println(date);
         return "success";
     }
 }
